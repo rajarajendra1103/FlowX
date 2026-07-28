@@ -1,7 +1,7 @@
 # FlowX ⚡
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/nicholasxjy/FlowX/releases/tag/v0.1.0)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/rajarajendra1103/FlowX/releases/tag/v0.1.0)
 [![Core Size](https://img.shields.io/badge/gzipped%20core-2.83%20KB-brightgreen.svg)](#)
 [![Setup](https://img.shields.io/badge/Setup-CDN%20Only-blue.svg)](#cdn-quickstart)
 
@@ -16,9 +16,9 @@ With FlowX, you get:
 
 ---
 
-## ⚡ CDN Quickstart (No Build Required)
+## ⚡ CDN Quickstart (via GitHub + jsDelivr)
 
-To use FlowX, simply copy and paste the CDN `<script>` tag into the `<head>` of your HTML document. **No npm, No Node.js, and No build tools required!**
+To use FlowX directly in the browser, copy and paste the CDN `<script>` tags into the `<head>` of your HTML document. **No npm registry, No Node.js, and No build tools required!**
 
 ### Standard HTML Template
 
@@ -31,16 +31,16 @@ To use FlowX, simply copy and paste the CDN `<script>` tag into the `<head>` of 
     <title>My FlowX Application</title>
 
     <!-- 1. FlowX Core Engine (~2.8KB gzipped) -->
-    <script src="https://cdn.jsdelivr.net/npm/@flowx/core@0.1.0/dist/index.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/core/dist/index.global.js"></script>
 
     <!-- 2. FlowX UI Custom Elements (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/@flowx/ui@0.1.0/dist/flowx-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/ui/dist/flowx-ui.js"></script>
 
     <!-- 3. FlowX Planner Widgets: Kanban, Calendar, Gantt (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/@flowx/ui-planner@0.1.0/dist/flowx-planner.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/ui/planner/dist/flowx-planner.js"></script>
 
     <!-- 4. FlowX SVG Charts Library (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/@flowx/charts@0.1.0/dist/flowx-charts.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/charts/dist/flowx-charts.global.js"></script>
   </head>
   <body style="font-family: system-ui; padding: 2rem; background: #0f172a; color: #f8fafc;">
     <!-- Example 1: Declarative Server HTML Swap -->
@@ -88,16 +88,19 @@ To use FlowX, simply copy and paste the CDN `<script>` tag into the `<head>` of 
 
 ---
 
-## 📡 CDN Script URLs
+## 📡 Production CDN Script URLs (GitHub + jsDelivr)
 
-| Package           | CDN Script Tag                                                                                              | Size       | Description                                                                    |
-| :---------------- | :---------------------------------------------------------------------------------------------------------- | :--------- | :----------------------------------------------------------------------------- |
-| **FlowX Core**    | `<script src="https://cdn.jsdelivr.net/npm/@flowx/core@0.1.0/dist/index.global.js"></script>`               | `~2.8 KB`  | Core AJAX engine (`fx-get`, `fx-post`, `fx-target`, `fx-swap`)                 |
-| **FlowX UI**      | `<script src="https://cdn.jsdelivr.net/npm/@flowx/ui@0.1.0/dist/flowx-ui.js"></script>`                     | `~210 KB`  | 13 Tiers of UI components (Buttons, Modals, Forms, Navigation, Chat, Comments) |
-| **FlowX Planner** | `<script src="https://cdn.jsdelivr.net/npm/@flowx/ui-planner@0.1.0/dist/flowx-planner.js"></script>`        | `~41 KB`   | Planner widgets (Kanban, Calendar, Gantt, Whiteboard, Scheduler)               |
-| **FlowX Charts**  | `<script src="https://cdn.jsdelivr.net/npm/@flowx/charts@0.1.0/dist/flowx-charts.global.js"></script>`      | `~29.7 KB` | Zero-dependency SVG Charts with JSON data island support                       |
+| Package           | GitHub + jsDelivr CDN Script Tag                                                                                                                               | Size       | Description                                                                    |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------- | :----------------------------------------------------------------------------- |
+| **FlowX Core**    | `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/core/dist/index.global.js"></script>`                                        | `~2.8 KB`  | Core AJAX engine (`fx-get`, `fx-post`, `fx-target`, `fx-swap`)                 |
+| **FlowX UI**      | `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/ui/dist/flowx-ui.js"></script>`                                              | `~210 KB`  | 13 Tiers of UI components (Buttons, Modals, Forms, Navigation, Chat, Comments) |
+| **FlowX Planner** | `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/ui/planner/dist/flowx-planner.js"></script>`                                 | `~41 KB`   | Planner widgets (Kanban, Calendar, Gantt, Whiteboard, Scheduler)               |
+| **FlowX Charts**  | `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/charts/dist/flowx-charts.global.js"></script>`                               | `~29.7 KB` | Zero-dependency SVG Charts with JSON data island support                       |
+| **FlowX DevTools**| `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/devtools/dist/flowx-devtools.js"></script>`                                 | `~12 KB`   | Standalone interactive developer tools & inspector overlay                     |
+| **FlowX SSE**     | `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/extensions/sse/dist/index.global.js"></script>`                              | `~2.0 KB`  | Server-Sent Events real-time streaming extension (`fx-sse-connect`)            |
+| **FlowX WebSockets**| `<script src="https://cdn.jsdelivr.net/gh/rajarajendra1103/FlowX@v0.1.0/packages/extensions/websockets/dist/index.global.js"></script>`                      | `~2.5 KB`  | WebSockets real-time streaming extension (`fx-ws-connect`)                     |
 
-> **Tip:** To always use the latest `0.x` release, replace `@0.1.0` with `@0` in the URLs above.
+> **Tip:** You can replace `@v0.1.0` with `@main` to load the latest commit from the `main` branch, or pin to exact tags like `@v0.1.0` for production stability.
 
 ---
 
@@ -107,22 +110,6 @@ To use FlowX, simply copy and paste the CDN `<script>` tag into the `<head>` of 
 2. **Add `fx-*` Attributes**: Add `fx-get`, `fx-post`, `fx-target`, or `fx-swap` attributes to any HTML element.
 3. **Use Web Components**: Use tags like `<flowx-button>`, `<flowx-kanban>`, `<flowx-calendar>`, or `<flowx-comments>` directly in your markup.
 4. **Backend Agnostic**: Return HTML snippets from any backend framework (Express, Django, Laravel, Rails, Go, PHP, Flask, ASP.NET).
-
----
-
-## 📦 npm Install (For Bundler Users)
-
-If you prefer using a bundler (Vite, Webpack, esbuild), install packages from npm:
-
-```bash
-npm install @flowx/core @flowx/ui @flowx/ui-planner @flowx/charts
-```
-
-```js
-// ESM import
-import '@flowx/core';
-import '@flowx/ui';
-```
 
 ---
 
