@@ -1,0 +1,34 @@
+{
+  "name": "flowx-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FlowX is an HTMX-first frontend ecosystem",
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "packages/*",
+    "packages/ui/*",
+    "packages/extensions/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:e2e": "playwright test",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,js,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,css,md}\"",
+    "bundle-size-check": "turbo run bundle-size-check",
+    "dev": "turbo run dev --parallel"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "turbo": "^2.0.11",
+    "typescript": "^5.5.4"
+  }
+}

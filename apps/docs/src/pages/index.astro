@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Welcome to FlowX">
+  <!-- Homepage Introduction -->
+  <section class="card">
+    <h2 class="card-title">⚡ FlowX: HTML-First Frontend</h2>
+    <p id="about-text" style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">
+      FlowX is an HTMX-first frontend ecosystem that enables developers to build modern, interactive web applications using HTML first, with little or no custom JavaScript. By declaring actions directly in your markup using intuitive attributes, FlowX handles the AJAX requests, dynamic swaps, animations, and lifecycle callbacks behind the scenes. It features a lightweight ~2.5KB core request engine, built-in viewport-revealed triggers, seamless transitions, and a developer-friendly devtools dashboard. With zero complex builds, FlowX simplifies web development by returning focus back to HTML.
+    </p>
+  </section>
+
+  <!-- Getting Started Guide -->
+  <section class="card">
+    <h2 class="card-title">🚀 Getting Started</h2>
+    <p class="card-desc">Start building reactive components with FlowX in less than two minutes.</p>
+
+    <h3>1. Include FlowX in your HTML</h3>
+    <p>For quick prototyping, load the engine directly from the CDN script in your <code>&lt;head&gt;</code>:</p>
+    <pre><code>&lt;script src="https://unpkg.com/@flowx/core/dist/index.global.js"&gt;&lt;/script&gt;</code></pre>
+
+    <p>Alternatively, install it locally via npm:</p>
+    <pre><code>npm install @flowx/core</code></pre>
+
+    <h3>2. Create an AJAX Trigger</h3>
+    <p>Add <code>fx-get</code> (or <code>data-fx-get</code>) and <code>fx-target</code> to perform AJAX and swap response HTML:</p>
+    <pre><code>&lt;button 
+  fx-get="/api/time" 
+  fx-target="#time-display" 
+  fx-swap="innerHTML"
+&gt;
+  Fetch Server Time
+&lt;/button&gt;
+
+&lt;div id="time-display"&gt;Press button to fetch...&lt;/div&gt;</code></pre>
+
+    <h3>3. Launch with DevTools Debugging</h3>
+    <p>Import and initialize FlowX along with the collapsed overlay DevTools debugger panel in your module script:</p>
+    <pre><code is:raw>import { FlowX } from '@flowx/core';
+import { FlowXDevTools } from '@flowx/devtools';
+
+// Register DevTools
+FlowX.addExtension(FlowXDevTools);
+FlowX.init();</code></pre>
+  </section>
+</Layout>
+
+<style>
+  pre {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    color: #e6edf3;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+  code {
+    font-family: 'Fira Code', monospace;
+  }
+  h3 {
+    margin-top: 2rem;
+    color: var(--primary);
+  }
+</style>

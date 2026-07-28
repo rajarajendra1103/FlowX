@@ -1,0 +1,342 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Theming & Layout Primitives">
+  <!-- Load FlowX Theme Tokens & Components -->
+  <style is:global>
+    @import '../../../../packages/ui/src/styles/index.css';
+
+    .demo-theme-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--flowx-bg-surface, #ffffff);
+      border: 1px solid var(--flowx-border-color, #e2e8f0);
+      border-radius: var(--flowx-radius-lg, 16px);
+      margin-bottom: 2rem;
+      box-shadow: var(--flowx-shadow-md);
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .theme-selector-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .theme-btn {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--flowx-border-color);
+      border-radius: var(--flowx-radius-md);
+      background: var(--flowx-bg-surface);
+      color: var(--flowx-color-text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .theme-btn:hover, .theme-btn.active {
+      border-color: var(--flowx-color-primary);
+      background: var(--flowx-bg-hover);
+      color: var(--flowx-color-primary);
+    }
+
+    .token-table-container {
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border: 1px solid var(--flowx-border-color);
+      border-radius: var(--flowx-radius-md);
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .token-table th, .token-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--flowx-border-color);
+    }
+
+    .token-table th {
+      background: var(--flowx-bg-hover);
+      color: var(--flowx-color-text);
+      font-weight: 700;
+    }
+
+    .token-table tr:hover {
+      background: var(--flowx-bg-hover);
+    }
+
+    .code-token {
+      font-family: var(--flowx-font-mono);
+      font-size: 0.82rem;
+      color: var(--flowx-color-primary);
+      background: rgba(37, 99, 235, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .swatch {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.15);
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    .cli-box {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--flowx-radius-md);
+      font-family: var(--flowx-font-mono);
+      font-size: 0.9rem;
+      margin: 1rem 0 2rem;
+      line-height: 1.6;
+    }
+
+    .dashboard-preview-box {
+      border: 1px solid var(--flowx-border-color);
+      border-radius: var(--flowx-radius-lg);
+      overflow: hidden;
+      margin: 2rem 0;
+      height: 600px;
+    }
+  </style>
+
+  <!-- Load FlowX Components Bundle -->
+  <script>
+    import '@flowx/ui';
+  </script>
+
+  <section style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Theming System & Layout Primitives ⚡
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+      FlowX features a fully switchable CSS Custom Properties design token engine. Zero hardcoded styles — every component seamlessly adapts to light, dark, and custom brand themes upfront without JavaScript flash.
+    </p>
+  </section>
+
+  <!-- Interactive Live Theme Switcher Bar -->
+  <div class="demo-theme-bar">
+    <div>
+      <strong style="display: block; font-size: 1rem; color: var(--flowx-color-text);">Global Theme Switcher</strong>
+      <span style="font-size: 0.85rem; color: var(--flowx-color-text-muted);">Toggle themes live across all page elements & components</span>
+    </div>
+
+    <div class="theme-selector-group">
+      <flowx-theme-toggle cookie-name="flowx-theme"></flowx-theme-toggle>
+      <button class="theme-btn" onclick="document.documentElement.setAttribute('data-theme', 'light')">Light</button>
+      <button class="theme-btn" onclick="document.documentElement.setAttribute('data-theme', 'dark')">Dark</button>
+      <button class="theme-btn" onclick="document.documentElement.setAttribute('data-theme', 'auto')">Auto</button>
+      <button class="theme-btn" onclick="document.documentElement.setAttribute('data-theme', 'emerald')" style="color: #10b981; border-color: #10b981;">Emerald Accent</button>
+    </div>
+  </div>
+
+  <!-- Live Composed Dashboard & Layout Showcase -->
+  <section class="card">
+    <h2 class="card-title">🖥️ Live App Shell & Layout Showcase</h2>
+    <p class="card-desc">Combining 10+ components across Tiers 1-9 with <code>&lt;flowx-dashboard-layout&gt;</code>, <code>&lt;flowx-split-pane&gt;</code>, and container-query <code>&lt;flowx-grid&gt;</code>.</p>
+
+    <div class="dashboard-preview-box">
+      <flowx-dashboard-layout sidebar-width="220px" right-panel>
+        <div slot="header" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px;">
+          <div style="font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+            <span style="color: var(--flowx-color-primary)">FlowX</span> Console ⚡
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <flowx-badge variant="success">Online v1.0</flowx-badge>
+            <flowx-theme-toggle></flowx-theme-toggle>
+          </div>
+        </div>
+
+        <div slot="sidebar" style="padding: 16px;">
+          <flowx-stack gap="3">
+            <flowx-button variant="primary" size="sm" style="width: 100%;">+ New Project</flowx-button>
+            <flowx-divider></flowx-divider>
+            <flowx-button variant="ghost" size="sm">📊 Analytics</flowx-button>
+            <flowx-button variant="ghost" size="sm">⚙️ System Settings</flowx-button>
+            <flowx-button variant="ghost" size="sm">🔒 Security Audit</flowx-button>
+            <flowx-button variant="ghost" size="sm">🌐 Deployments</flowx-button>
+          </flowx-stack>
+        </div>
+
+        <div slot="main">
+          <flowx-split-pane direction="horizontal" initial-split="50" style="height: 100%;">
+            <div slot="pane-1" style="padding: 16px;">
+              <flowx-stack gap="4">
+                <flowx-alert variant="info" title="System Theme Active">
+                  All components visually adapt to <code>--flowx-bg-base</code> and <code>--flowx-bg-surface</code>.
+                </flowx-alert>
+
+                <flowx-grid cols="1" cols-md="2" gap="4">
+                  <flowx-card>
+                    <h4 style="margin: 0 0 8px;">Total Requests</h4>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--flowx-color-primary);">1,284,910</div>
+                    <flowx-progress value="82"></flowx-progress>
+                  </flowx-card>
+
+                  <flowx-card>
+                    <h4 style="margin: 0 0 8px;">API Latency</h4>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--flowx-color-success);">14ms</div>
+                    <flowx-chip variant="success">Optimal</flowx-chip>
+                  </flowx-card>
+                </flowx-grid>
+
+                <flowx-stepper current-step="2" steps='["Deploy", "Verify", "Monitor"]'></flowx-stepper>
+              </flowx-stack>
+            </div>
+
+            <div slot="pane-2" style="padding: 16px;">
+              <flowx-stack gap="4">
+                <flowx-tabs tabs='["System Health", "Logs"]'></flowx-tabs>
+                <flowx-code-viewer code='// FlowX Design Tokens
+:root[data-theme="emerald"] {
+  --flowx-bg-base: #064e3b;
+  --flowx-bg-surface: #047857;
+  --flowx-color-primary: #10b981;
+}' language="css"></flowx-code-viewer>
+              </flowx-stack>
+            </div>
+          </flowx-split-pane>
+        </div>
+
+        <div slot="right-panel" style="padding: 16px;">
+          <h4 style="margin: 0 0 12px; font-size: 0.95rem;">Live Activity</h4>
+          <flowx-stack gap="3">
+            <div style="font-size: 0.82rem;">
+              <span class="swatch" style="background: #10b981;"></span> Deploy #419 successful
+            </div>
+            <div style="font-size: 0.82rem;">
+              <span class="swatch" style="background: #3b82f6;"></span> SSL Certificate renewed
+            </div>
+            <div style="font-size: 0.82rem;">
+              <span class="swatch" style="background: #f59e0b;"></span> High Traffic Alert
+            </div>
+          </flowx-stack>
+        </div>
+
+        <div slot="footer">
+          FlowX Ecosystem &copy; 2026. Zero-JS CSS layout fallback & Theme Engine.
+        </div>
+      </flowx-dashboard-layout>
+    </div>
+  </section>
+
+  <!-- CLI Custom Theme Generator Guide -->
+  <section class="card">
+    <h2 class="card-title">🛠️ CLI Custom Theme Generator</h2>
+    <p class="card-desc">Generate a fully documented custom brand theme file with every token preset and commented.</p>
+
+    <div class="cli-box">
+      <div style="color: #94a3b8; margin-bottom: 6px;"># Generate a starter custom theme via FlowX CLI:</div>
+      <div style="color: #38bdf8;">$ npx flowx theme create my-brand</div>
+      <div style="color: #4ade80; margin-top: 8px;">✔ Created custom theme template at: ./theme-my-brand.css</div>
+      <div style="color: #94a3b8; margin-top: 4px;">✔ Activate in HTML via &lt;html data-theme="my-brand"&gt;</div>
+    </div>
+  </section>
+
+  <!-- Full Token Reference Table -->
+  <section class="card">
+    <h2 class="card-title">📖 Canonical Token Reference Table</h2>
+    <p class="card-desc">Complete overview of all CSS custom properties defined on <code>:root</code>.</p>
+
+    <div class="token-table-container">
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Token Name</th>
+            <th>Description</th>
+            <th>Light Default</th>
+            <th>Dark Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="code-token">--flowx-bg-base</code></td>
+            <td>Main page canvas background</td>
+            <td><span class="swatch" style="background: #f8fafc;"></span>#f8fafc</td>
+            <td><span class="swatch" style="background: #0a0a0a;"></span>#0a0a0a</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-bg-surface</code></td>
+            <td>Card, panel, and container background</td>
+            <td><span class="swatch" style="background: #ffffff;"></span>#ffffff</td>
+            <td><span class="swatch" style="background: #171717;"></span>#171717</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-bg-surface-raised</code></td>
+            <td>Elevated elements (Modals, Dropdowns)</td>
+            <td><span class="swatch" style="background: #ffffff;"></span>#ffffff</td>
+            <td><span class="swatch" style="background: #262626;"></span>#262626</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-bg-hover</code></td>
+            <td>Interactive element hover background tint</td>
+            <td>rgba(0,0,0,0.05)</td>
+            <td>rgba(255,255,255,0.08)</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-color-primary</code></td>
+            <td>Primary brand accent color</td>
+            <td><span class="swatch" style="background: #2563eb;"></span>#2563eb</td>
+            <td><span class="swatch" style="background: #3b82f6;"></span>#3b82f6</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-color-secondary</code></td>
+            <td>Secondary accent color</td>
+            <td><span class="swatch" style="background: #475569;"></span>#475569</td>
+            <td><span class="swatch" style="background: #94a3b8;"></span>#94a3b8</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-color-text</code></td>
+            <td>Primary body text color</td>
+            <td><span class="swatch" style="background: #0f172a;"></span>#0f172a</td>
+            <td><span class="swatch" style="background: #f8fafc;"></span>#f8fafc</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-color-text-muted</code></td>
+            <td>Secondary / muted text color</td>
+            <td><span class="swatch" style="background: #64748b;"></span>#64748b</td>
+            <td><span class="swatch" style="background: #94a3b8;"></span>#94a3b8</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-border-color</code></td>
+            <td>Default border & divider color</td>
+            <td><span class="swatch" style="background: #e2e8f0;"></span>#e2e8f0</td>
+            <td><span class="swatch" style="background: #262626;"></span>#262626</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-shadow-color</code></td>
+            <td>Shadow tint (Glowing in dark mode)</td>
+            <td>rgba(0,0,0,0.08)</td>
+            <td>rgba(255,255,255,0.06)</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-space-1 .. 8</code></td>
+            <td>Spacing scale (4px to 40px)</td>
+            <td>4px to 40px</td>
+            <td>4px to 40px</td>
+          </tr>
+          <tr>
+            <td><code class="code-token">--flowx-radius-sm .. lg</code></td>
+            <td>Border radius scale (4px, 8px, 16px, 9999px)</td>
+            <td>4px to 9999px</td>
+            <td>4px to 9999px</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Layout>

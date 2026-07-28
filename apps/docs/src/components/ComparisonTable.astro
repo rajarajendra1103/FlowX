@@ -1,0 +1,90 @@
+---
+interface LibraryComparison {
+  name: string;
+  size: string;
+  dependencies: string;
+  keyFeatures: string[];
+}
+
+interface Props {
+  libraries: LibraryComparison[];
+}
+
+const { libraries } = Astro.props;
+---
+
+<div class="comparison-table-wrapper">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Library</th>
+        <th>Bundle Size</th>
+        <th>Dependencies</th>
+        <th>Key Features</th>
+      </tr>
+    </thead>
+    <tbody>
+      {libraries.map((lib) => (
+        <tr>
+          <td class="lib-name">{lib.name}</td>
+          <td>{lib.size}</td>
+          <td>{lib.dependencies}</td>
+          <td>
+            <ul class="features-list">
+              {lib.keyFeatures.map((feat) => (
+                <li>{feat}</li>
+              ))}
+            </ul>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .comparison-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: rgba(22, 30, 49, 0.2);
+    margin: 1.5rem 0;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .comparison-table th, .comparison-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .comparison-table th {
+    background: rgba(11, 15, 23, 0.6);
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .comparison-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .lib-name {
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .features-list {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-muted);
+  }
+
+  .features-list li {
+    margin-bottom: 0.25rem;
+  }
+</style>

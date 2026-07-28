@@ -1,0 +1,46 @@
+/* FlowX Emerald Accent Theme */
+:root[data-theme='emerald'] {
+  --flowx-bg-base: #064e3b;
+  --flowx-bg-surface: #047857;
+  --flowx-bg-surface-raised: #065f46;
+  --flowx-bg-hover: rgba(255, 255, 255, 0.1);
+  --flowx-bg-active: rgba(255, 255, 255, 0.2);
+
+  --flowx-color-primary: #10b981;
+  --flowx-color-primary-hover: #34d399;
+  --flowx-color-primary-text: #064e3b;
+
+  --flowx-color-secondary: #a7f3d0;
+  --flowx-color-secondary-hover: #6ee7b7;
+  --flowx-color-secondary-text: #064e3b;
+
+  --flowx-color-text: #ecfdf5;
+  --flowx-color-text-muted: #a7f3d0;
+  --flowx-color-text-subtle: #6ee7b7;
+
+  --flowx-color-ghost: transparent;
+  --flowx-color-ghost-hover: rgba(255, 255, 255, 0.12);
+  --flowx-color-ghost-text: #ecfdf5;
+
+  --flowx-color-danger: #f87171;
+  --flowx-color-danger-hover: #ef4444;
+  --flowx-color-danger-text: #ffffff;
+
+  --flowx-color-info: #38bdf8;
+  --flowx-color-success: #34d399;
+  --flowx-color-warning: #fbbf24;
+  --flowx-color-error: #f87171;
+  --flowx-color-neutral: #6ee7b7;
+
+  --flowx-color-overlay: rgba(6, 78, 59, 0.85);
+
+  --flowx-border-color: #059669;
+  --flowx-border-subtle: #047857;
+
+  --flowx-shadow-color: rgba(16, 185, 129, 0.25);
+  --flowx-shadow-sm: 0 1px 2px 0 var(--flowx-shadow-color);
+  --flowx-shadow-md: 0 4px 12px -2px var(--flowx-shadow-color);
+  --flowx-shadow-lg: 0 10px 25px -5px var(--flowx-shadow-color);
+
+  --flowx-color-focus-ring: 0 0 0 3px rgba(16, 185, 129, 0.5);
+}

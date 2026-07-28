@@ -1,0 +1,23 @@
+{
+  "name": "docs-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview --port 5173",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@flowx/core": "*",
+    "@flowx/ui": "*",
+    "@flowx/ui-planner": "*",
+    "@flowx/devtools": "*",
+    "astro": "^4.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "typescript": "^5.4.5"
+  }
+}

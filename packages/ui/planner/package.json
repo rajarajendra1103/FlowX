@@ -1,0 +1,37 @@
+{
+  "name": "@flowx/ui-planner",
+  "version": "0.1.0",
+  "description": "Tier 12 Planner, Scheduler, Kanban, Gantt, Calendar & Whiteboard primitives for FlowX",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/flowx-planner.js",
+  "jsdelivr": "./dist/flowx-planner.js",
+  "browser": "./dist/flowx-planner.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.4",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "@flowx/ui": "^0.1.0"
+  }
+}

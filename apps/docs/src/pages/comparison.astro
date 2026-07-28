@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+
+const comparisons = [
+  {
+    name: "FlowX",
+    size: "~2.5 KB gzipped",
+    dependencies: "None",
+    keyFeatures: [
+      "HTML-first AJAX engine with fx- attributes",
+      "Native viewport intersection (revealed) trigger",
+      "Built-in DevTools overlay timeline log console",
+      "Lightweight ES/UMD/IIFE formats for CJS and CDNs"
+    ]
+  },
+  {
+    name: "HTMX",
+    size: "~14 KB gzipped",
+    dependencies: "None",
+    keyFeatures: [
+      "AJAX request swapping from markup",
+      "Out-of-band updates support",
+      "WebSockets and SSE extensions library",
+      "CSS Transition hooks"
+    ]
+  },
+  {
+    name: "Alpine.js",
+    size: "~9 KB gzipped",
+    dependencies: "None",
+    keyFeatures: [
+      "Inline client state management",
+      "Two-way model data binding",
+      "Directives for styling transitions",
+      "Declarative UI reactive hooks"
+    ]
+  },
+  {
+    name: "Unpoly",
+    size: "~45 KB gzipped",
+    dependencies: "None",
+    keyFeatures: [
+      "Server-driven multi-frame layers",
+      "Modal overlays routing and layers control",
+      "Form validations auto-interception",
+      "Navigation history sync"
+    ]
+  }
+];
+---
+
+<Layout title="Framework Comparison">
+  <section class="card">
+    <h2 class="card-title">⚖️ Framework Comparison</h2>
+    <p class="card-desc">Compare FlowX with other modern HTML-first/lightweight Javascript libraries.</p>
+    
+    <ComparisonTable libraries={comparisons} />
+  </section>
+</Layout>

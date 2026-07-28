@@ -1,0 +1,173 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Locate and read core index.ts file
+const pathsToTry = [
+  path.resolve(process.cwd(), '../../packages/core/src/index.ts'),
+  path.resolve(process.cwd(), '../core/src/index.ts'),
+  path.resolve(process.cwd(), 'packages/core/src/index.ts'),
+];
+
+let coreCode = '';
+for (const p of pathsToTry) {
+  if (fs.existsSync(p)) {
+    coreCode = fs.readFileSync(p, 'utf-8');
+    break;
+  }
+}
+
+interface ApiItem {
+  name: string;
+  type: string;
+  description: string;
+  code: string;
+}
+
+const apiItems: ApiItem[] = [];
+
+if (coreCode) {
+  // Parse main TSDoc blocks
+  const blockRegex = /\/\*\*([\s\S]*?)\*\/\s*(export\s+(interface|const|function)\s+(\w+))/g;
+  let match;
+  
+  while ((match = blockRegex.exec(coreCode)) !== null) {
+    const rawComment = match[1];
+    const declaration = match[2];
+    const type = match[3];
+    const name = match[4];
+
+    // Clean comment lines
+    const description = rawComment
+      .split('\n')
+      .map(line => line.replace(/^\s*\*\s?/, '').trim())
+      .filter(line => line !== '')
+      .join(' ');
+
+    // Extract code declaration body
+    let code = '';
+    const startIndex = match.index + match[0].length;
+    let bracketCount = 0;
+    let foundBrackets = false;
+
+    // Search forward to extract full curly brace definition block
+    for (let i = startIndex; i < coreCode.length; i++) {
+      const char = coreCode[i];
+      code += char;
+      if (char === '{') {
+        bracketCount++;
+        foundBrackets = true;
+      } else if (char === '}') {
+        bracketCount--;
+      }
+      if (foundBrackets && bracketCount === 0) {
+        break;
+      }
+      // Stop search if statement ends with semicolon (e.g. simple let / type declarations)
+      if (!foundBrackets && char === ';') {
+        break;
+      }
+    }
+
+    apiItems.push({
+      name,
+      type,
+      description,
+      code: `${declaration}${code}`.trim()
+    });
+  }
+}
+---
+
+<Layout title="API Reference">
+  <section class="card">
+    <h2 class="card-title">📖 API Reference</h2>
+    <p class="card-desc">Automatically compiled from JSDoc/TSDoc comments in packages/core.</p>
+
+    {apiItems.length === 0 ? (
+      <p class="muted">API comments could not be parsed or file was not found.</p>
+    ) : (
+      <div class="api-grid">
+        {apiItems.map((item) => (
+          <div class="api-card">
+            <div class="api-header">
+              <span class="api-name">{item.name}</span>
+              <span class={`api-badge api-badge-${item.type}`}>{item.type}</span>
+            </div>
+            <p class="api-description">{item.description}</p>
+            <pre class="api-code"><code>{item.code}</code></pre>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+</Layout>
+
+<style>
+  .api-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .api-card {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+
+  .api-card:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .api-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .api-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .api-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid currentColor;
+  }
+
+  .api-badge-interface {
+    color: #ff7b72;
+  }
+
+  .api-badge-const {
+    color: #79c0ff;
+  }
+
+  .api-description {
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+  }
+
+  .api-code {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    color: #e6edf3;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+</style>

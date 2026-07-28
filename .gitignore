@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Dev/Testing outputs
+.turbo/
+coverage/
+playwright-report/
+test-results/
+.eslintcache
+
+# OS files
+.DS_Store
+Thumbs.db

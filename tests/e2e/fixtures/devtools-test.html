@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FlowX Standalone DevTools Test Fixture</title>
+  <!-- Load FlowX and DevTools standalone scripts -->
+  <script src="../../../packages/core/dist/index.global.js"></script>
+  <script src="../../../packages/devtools/dist/flowx-devtools.js"></script>
+  <script>
+    // Intercept/Mock fetch calls locally so it works offline on file:// protocol
+    window.fetch = async (url, options) => {
+      return new Response('<div id="response">Mocked Swapped Response Content</div>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/html' }
+      });
+    };
+  </script>
+</head>
+<body>
+  <h2>FlowX Standalone Server Page Sandbox</h2>
+  <button 
+    id="test-btn" 
+    fx-get="/mock-api-endpoint" 
+    fx-target="#response-box" 
+    fx-swap="innerHTML"
+  >
+    Trigger Swapping Request
+  </button>
+  <div id="response-box">Original Content Box</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "@flowx/ui",
+  "version": "0.1.0",
+  "description": "FlowX UI Custom Elements Primitive Library",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/flowx-ui.js",
+  "jsdelivr": "./dist/flowx-ui.js",
+  "browser": "./dist/flowx-ui.js",
+  "files": [
+    "dist",
+    "src/styles"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles/*": "./src/styles/*",
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "happy-dom": "^14.12.3",
+    "tsup": "^8.1.0",
+    "vitest": "^1.6.0"
+  }
+}

@@ -1,0 +1,1165 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'fs';
+import path from 'path';
+
+// Load FlowX core IIFE bundle at compile time to inject inside sandbox
+const pathsToTry = [
+  path.resolve(process.cwd(), '../../packages/core/dist/index.global.js'),
+  path.resolve(process.cwd(), '../core/dist/index.global.js'),
+  path.resolve(process.cwd(), 'packages/core/dist/index.global.js'),
+];
+
+let flowxCode = '';
+for (const p of pathsToTry) {
+  if (fs.existsSync(p)) {
+    flowxCode = fs.readFileSync(p, 'utf-8');
+    break;
+  }
+}
+
+// Load FlowX UI IIFE bundle to inject inside sandbox preview
+const uiPathsToTry = [
+  path.resolve(process.cwd(), '../../packages/ui/dist/flowx-ui.js'),
+  path.resolve(process.cwd(), '../ui/dist/flowx-ui.js'),
+  path.resolve(process.cwd(), 'packages/ui/dist/flowx-ui.js'),
+];
+
+let flowxUiCode = '';
+for (const p of uiPathsToTry) {
+  if (fs.existsSync(p)) {
+    flowxUiCode = fs.readFileSync(p, 'utf-8');
+    break;
+  }
+}
+
+// Load FlowX Charts IIFE bundle to inject inside playground
+const chartsPathsToTry = [
+  path.resolve(process.cwd(), '../../packages/charts/dist/flowx-charts.global.js'),
+  path.resolve(process.cwd(), '../charts/dist/flowx-charts.global.js'),
+  path.resolve(process.cwd(), 'packages/charts/dist/flowx-charts.global.js'),
+];
+
+let flowxChartsCode = '';
+for (const p of chartsPathsToTry) {
+  if (fs.existsSync(p)) {
+    flowxChartsCode = fs.readFileSync(p, 'utf-8');
+    break;
+  }
+}
+---
+
+<Layout title="Interactive Playground">
+  <script is:inline set:html={flowxCode}></script>
+  <script is:inline set:html={flowxUiCode}></script>
+  <script is:inline set:html={flowxChartsCode}></script>
+  <section class="card" style="max-width: 100%; margin-bottom: 0;">
+    <h2 class="card-title">⚡ Interactive Playground</h2>
+    <p class="card-desc">Edit HTML with <code>data-fx-*</code> or <code>fx-*</code> attributes on the left and see the reactive live preview on the right.</p>
+
+    <div class="playground-layout">
+      <!-- Editor Column -->
+      <div class="editor-pane">
+        <div class="pane-header">📝 HTML Editor</div>
+        <textarea id="code-editor"></textarea>
+      </div>
+
+      <!-- Preview Column -->
+      <div class="preview-pane">
+        <div class="pane-header">👁️ Live Preview Frame</div>
+        <iframe id="preview-iframe"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Section -->
+  <section class="card" style="max-width: 100%; margin-top: 30px;">
+    <h2 class="card-title">🎨 UI Component Showcase</h2>
+    <p class="card-desc">Interactive catalog of FlowX custom elements primitives. Select a component, modify properties, and see it render live.</p>
+
+    <div class="showcase-layout">
+      <!-- Selector Pane -->
+      <div class="showcase-nav">
+        <div class="nav-section-label">Tier 1 Primitives</div>
+        <button class="nav-btn active" data-target="btn">Button</button>
+        <button class="nav-btn" data-target="icon-btn">Icon Button</button>
+        <button class="nav-btn" data-target="link">Link</button>
+        <button class="nav-btn" data-target="badge">Badge</button>
+        <button class="nav-btn" data-target="avatar">Avatar</button>
+        <button class="nav-btn" data-target="card">Card</button>
+        <button class="nav-btn" data-target="divider">Divider</button>
+        <button class="nav-btn" data-target="chip">Chip</button>
+        <button class="nav-btn" data-target="alert">Alert</button>
+        <button class="nav-btn" data-target="toast">Toast</button>
+        <button class="nav-btn" data-target="progress">Progress</button>
+        <button class="nav-btn" data-target="spinner">Spinner</button>
+        <button class="nav-btn" data-target="skeleton">Skeleton</button>
+        <div class="nav-section-label">Tier 2 Interactive</div>
+        <button class="nav-btn" data-target="tooltip">Tooltip</button>
+        <button class="nav-btn" data-target="popover">Popover</button>
+        <button class="nav-btn" data-target="dropdown">Dropdown</button>
+        <button class="nav-btn" data-target="accordion">Accordion</button>
+        <button class="nav-btn" data-target="tabs">Tabs</button>
+        <button class="nav-btn" data-target="breadcrumb">Breadcrumb</button>
+        <button class="nav-btn" data-target="pagination">Pagination</button>
+        <button class="nav-btn" data-target="stepper">Stepper</button>
+        <button class="nav-btn" data-target="timeline">Timeline</button>
+        <div class="nav-section-label">Tier 3 Forms</div>
+        <button class="nav-btn" data-target="fx-input">Input</button>
+        <button class="nav-btn" data-target="fx-textarea">Textarea</button>
+        <button class="nav-btn" data-target="fx-checkbox">Checkbox</button>
+        <button class="nav-btn" data-target="fx-switch">Switch</button>
+        <button class="nav-btn" data-target="fx-radio">Radio Group</button>
+        <button class="nav-btn" data-target="fx-select">Select</button>
+        <button class="nav-btn" data-target="fx-slider">Slider</button>
+        <button class="nav-btn" data-target="fx-rating">Rating</button>
+        <button class="nav-btn" data-target="fx-otp">OTP Input</button>
+        <button class="nav-btn" data-target="fx-autocomplete">Autocomplete</button>
+        <button class="nav-btn" data-target="fx-signup-form">🚀 Signup Form Demo</button>
+        <div class="nav-section-label">Tier 5 Server Data</div>
+        <button class="nav-btn" data-target="fx-data-table">Data Table</button>
+        <button class="nav-btn" data-target="fx-data-grid">Data Grid</button>
+        <button class="nav-btn" data-target="fx-search">Debounced Search</button>
+        <button class="nav-btn" data-target="fx-export">Export Button</button>
+        <button class="nav-btn" data-target="fx-print">Print Button</button>
+        <button class="nav-btn" data-target="fx-grid-demo">⚡ Server Data Grid Showcase</button>
+        <div class="nav-section-label">Tier 6 Overlays</div>
+        <button class="nav-btn" data-target="fx-modal">Modal</button>
+        <button class="nav-btn" data-target="fx-sheet">Sheet</button>
+        <button class="nav-btn" data-target="fx-bottom-sheet">Bottom Sheet</button>
+        <button class="nav-btn" data-target="fx-confirm">Confirm Dialog</button>
+        <button class="nav-btn" data-target="fx-lightbox">Lightbox</button>
+        <button class="nav-btn" data-target="fx-delete-demo">🚀 Gated Delete Showcase</button>
+        <div class="nav-section-label">Tier 7 Navigation</div>
+        <button class="nav-btn" data-target="fx-navbar">Navbar</button>
+        <button class="nav-btn" data-target="fx-sidebar">Sidebar</button>
+        <button class="nav-btn" data-target="fx-dock">Mac Dock</button>
+        <button class="nav-btn" data-target="fx-bottom-nav">Bottom Nav</button>
+        <button class="nav-btn" data-target="fx-menu">Menu & Items</button>
+        <button class="nav-btn" data-target="fx-app-shell">🚀 Full App Shell Showcase</button>
+        <div class="nav-section-label">Tier 8 Charts & Dashboard</div>
+        <button class="nav-btn" data-target="fx-bar-chart">Bar Chart</button>
+        <button class="nav-btn" data-target="fx-line-chart">Line Chart</button>
+        <button class="nav-btn" data-target="fx-pie-chart">Pie Chart</button>
+        <button class="nav-btn" data-target="fx-gauge">Gauge Dial</button>
+        <button class="nav-btn" data-target="fx-kpi-card">KPI Card</button>
+        <button class="nav-btn" data-target="fx-live-dashboard">🚀 Live SSE Dashboard Showcase</button>
+        <div class="nav-section-label">Tier 9 Media & Viewers</div>
+        <button class="nav-btn" data-target="fx-image">Image + Blur</button>
+        <button class="nav-btn" data-target="fx-gallery">Image Gallery</button>
+        <button class="nav-btn" data-target="fx-carousel">Carousel</button>
+        <button class="nav-btn" data-target="fx-video-player">Video Player</button>
+        <button class="nav-btn" data-target="fx-markdown-viewer">Markdown Viewer</button>
+        <button class="nav-btn" data-target="fx-code-viewer">Code Viewer</button>
+      </div>
+
+      <!-- Controls & Preview Panel -->
+      <div class="showcase-panel">
+        <div id="controls-section">
+          <!-- Dynamically populated controls -->
+        </div>
+
+        <div id="preview-section">
+          <div class="preview-header">Live Component Render</div>
+          <div id="component-container">
+            <!-- Custom Element rendered here -->
+          </div>
+          <pre id="code-snippet"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<!-- Load CodeMirror v5 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<!-- Pass compiled core FlowX and UI code to client runtime -->
+<script is:inline define:vars={{ flowxCode, flowxUiCode }}>
+  window.FLOWX_CORE_CODE = flowxCode;
+  window.FLOWX_UI_CODE = flowxUiCode;
+</script>
+
+<script>
+  // Register all Custom Elements in docs parent window for the Showcase preview panel
+  import '../../../../packages/ui/src/index';
+</script>
+
+<script is:inline>
+  const defaultHtml = `<div class="sandbox-container">
+  <h3>⚡ FlowX AJAX Sandbox</h3>
+  <p>Modify these attributes and click the button!</p>
+  
+  <flowx-button 
+    variant="primary" 
+    size="md"
+    fx-get="/api/time" 
+    fx-target="#response-box" 
+    fx-swap="innerHTML"
+  >
+    Get Server Time
+  </flowx-button>
+
+  <div id="response-box" style="margin-top: 15px;">
+    Click the button to query...
+  </div>
+</div>`;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    // 1. Setup Editor & Preview Iframe
+    const textarea = document.getElementById('code-editor');
+    const iframe = document.getElementById('preview-iframe');
+
+    if (textarea && iframe) {
+      const editor = CodeMirror.fromTextArea(textarea, {
+        lineNumbers: true,
+        mode: 'htmlmixed',
+        theme: 'dracula',
+        tabSize: 2,
+      });
+
+      editor.setValue(defaultHtml);
+
+      const updatePreview = () => {
+        const value = editor.getValue();
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        doc.open();
+        doc.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <style>
+              body {
+                font-family: system-ui, -apple-system, sans-serif;
+                color: #e6edf3;
+                background: #0d1117;
+                margin: 1.5rem;
+              }
+              .sandbox-container {
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 8px;
+                padding: 1.5rem;
+                background: rgba(255,255,255,0.01);
+              }
+              h3 {
+                margin-top: 0;
+                color: #58a6ff;
+              }
+              #response-box {
+                padding: 0.75rem;
+                background: rgba(0,0,0,0.2);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 6px;
+                color: #8b949e;
+                font-size: 0.9rem;
+              }
+            </style>
+          </head>
+          <body>
+            ${value}
+            
+            <!-- Inject local FlowX Core & UI runtimes -->
+            <script>${window.FLOWX_CORE_CODE || ''}<\/script>
+            <script>${window.FLOWX_UI_CODE || ''}<\/script>
+            
+            <!-- Mock sandbox requests -->
+            <script>
+              const originFetch = window.fetch;
+              window.fetch = async (url, options) => {
+                if (url.includes('/api/time')) {
+                  return new Response('🕒 Mocked time: ' + new Date().toLocaleTimeString(), {
+                    status: 200,
+                    headers: { 'Content-Type': 'text/plain' }
+                  });
+                }
+                return originFetch(url, options);
+              };
+            <\/script>
+          </body>
+          </html>
+        `);
+        doc.close();
+      };
+
+      editor.on('change', () => updatePreview());
+      updatePreview();
+    }
+
+    // 2. Setup Components Showcase Tab Panel
+    const componentsConfig = {
+      btn: {
+        tag: 'flowx-button',
+        attrs: {
+          variant: { type: 'select', options: ['primary', 'secondary', 'ghost', 'danger'], value: 'primary' },
+          size: { type: 'select', options: ['sm', 'md', 'lg'], value: 'md' },
+          disabled: { type: 'boolean', value: false },
+          loading: { type: 'boolean', value: false }
+        },
+        slot: 'Click Me'
+      },
+      'icon-btn': {
+        tag: 'flowx-icon-button',
+        attrs: {
+          variant: { type: 'select', options: ['primary', 'secondary', 'ghost', 'danger'], value: 'primary' },
+          size: { type: 'select', options: ['sm', 'md', 'lg'], value: 'md' },
+          round: { type: 'boolean', value: false },
+          disabled: { type: 'boolean', value: false },
+          loading: { type: 'boolean', value: false },
+          'aria-label': { type: 'text', value: 'Search Button' }
+        },
+        slot: '🔍'
+      },
+      link: {
+        tag: 'flowx-link',
+        attrs: {
+          href: { type: 'text', value: 'https://example.com' },
+          target: { type: 'select', options: ['', '_blank', '_self'], value: '_blank' }
+        },
+        slot: 'Search Engine'
+      },
+      badge: {
+        tag: 'flowx-badge',
+        attrs: {
+          variant: { type: 'select', options: ['neutral', 'info', 'success', 'warning', 'error'], value: 'info' },
+          size: { type: 'select', options: ['sm', 'md'], value: 'md' }
+        },
+        slot: 'New Badge'
+      },
+      avatar: {
+        tag: 'flowx-avatar',
+        attrs: {
+          name: { type: 'text', value: 'Jane Smith' },
+          src: { type: 'text', value: '' }
+        },
+        slot: ''
+      },
+      card: {
+        tag: 'flowx-card',
+        attrs: {},
+        slot: '<div slot="header">Card Header</div><p>This is a standard card component containing multiple sections.</p><div slot="footer">Card Footer</div>'
+      },
+      divider: {
+        tag: 'flowx-divider',
+        attrs: {
+          orientation: { type: 'select', options: ['horizontal', 'vertical'], value: 'horizontal' }
+        },
+        slot: ''
+      },
+      chip: {
+        tag: 'flowx-chip',
+        attrs: {
+          dismissible: { type: 'boolean', value: true }
+        },
+        slot: 'JavaScript Tag'
+      },
+      alert: {
+        tag: 'flowx-alert',
+        attrs: {
+          variant: { type: 'select', options: ['info', 'success', 'warning', 'error'], value: 'info' },
+          dismissible: { type: 'boolean', value: true }
+        },
+        slot: 'System settings have been updated successfully.'
+      },
+      toast: {
+        tag: 'div',
+        attrs: {},
+        slot: '<button id="trigger-toast-btn" style="background:#0066cc;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Trigger Programmatic Toast</button>',
+        setup: () => {
+          const btn = document.getElementById('trigger-toast-btn');
+          if (btn) {
+            btn.onclick = () => {
+              if (window.FlowXToast) {
+                window.FlowXToast.show({ message: 'Success! Stacked notification triggered.', variant: 'success' });
+              }
+            };
+          }
+        }
+      },
+      progress: {
+        tag: 'flowx-progress',
+        attrs: {
+          value: { type: 'range', min: 0, max: 100, value: 45 },
+          max: { type: 'number', value: 100 }
+        },
+        slot: ''
+      },
+      spinner: {
+        tag: 'flowx-spinner',
+        attrs: {
+          size: { type: 'select', options: ['sm', 'md', 'lg'], value: 'md' }
+        },
+        slot: ''
+      },
+      skeleton: {
+        tag: 'flowx-skeleton',
+        attrs: {
+          variant: { type: 'select', options: ['text', 'rect', 'circle'], value: 'rect' },
+          width: { type: 'text', value: '150px' },
+          height: { type: 'text', value: '40px' }
+        },
+        slot: ''
+      },
+      // ── Tier 2 ────────────────────────────────────────────────────
+      tooltip: {
+        tag: 'flowx-tooltip',
+        attrs: {
+          content: { type: 'text', value: 'Helpful tooltip text' },
+          placement: { type: 'select', options: ['top', 'bottom', 'left', 'right'], value: 'top' },
+          delay: { type: 'number', value: 150 }
+        },
+        slot: '<flowx-button variant="secondary">Hover me</flowx-button>'
+      },
+      popover: {
+        tag: 'flowx-popover',
+        attrs: {
+          placement: { type: 'select', options: ['top', 'bottom', 'left', 'right'], value: 'bottom' }
+        },
+        slot: '<flowx-button slot="trigger" variant="primary">Open Popover</flowx-button><div slot="content" style="padding:8px;color:#e6edf3;font-size:14px">📋 This is popover content with any HTML inside.</div>'
+      },
+      dropdown: {
+        tag: 'flowx-dropdown',
+        attrs: {
+          label: { type: 'text', value: 'Actions' },
+          placement: { type: 'select', options: ['bottom', 'top', 'left', 'right'], value: 'bottom' }
+        },
+        slot: '<flowx-dropdown-item value="edit">✏️ Edit</flowx-dropdown-item><flowx-dropdown-item value="duplicate">📋 Duplicate</flowx-dropdown-item><flowx-dropdown-item value="delete" style="color:#dc3545">🗑️ Delete</flowx-dropdown-item>'
+      },
+      accordion: {
+        tag: 'flowx-accordion',
+        attrs: {
+          multi: { type: 'boolean', value: false }
+        },
+        slot: '<flowx-accordion-item header="What is FlowX?">FlowX is a native Web Components UI ecosystem inspired by HTMX.</flowx-accordion-item><flowx-accordion-item header="Is it dependency-free?">Yes! FlowX has zero external runtime dependencies.</flowx-accordion-item><flowx-accordion-item header="Can I use it with any backend?">Absolutely — Django, Rails, Laravel, PHP, or any server-rendered HTML.</flowx-accordion-item>'
+      },
+      tabs: {
+        tag: 'flowx-tabs',
+        attrs: {
+          value: { type: 'text', value: 'tab1' }
+        },
+        slot: '<flowx-tab-list><flowx-tab value="tab1">Overview</flowx-tab><flowx-tab value="tab2">Details</flowx-tab><flowx-tab value="tab3">Settings</flowx-tab></flowx-tab-list><flowx-tab-panel value="tab1">Overview content goes here.</flowx-tab-panel><flowx-tab-panel value="tab2">Details panel content.</flowx-tab-panel><flowx-tab-panel value="tab3">Settings panel content.</flowx-tab-panel>'
+      },
+      breadcrumb: {
+        tag: 'flowx-breadcrumb',
+        attrs: {
+          separator: { type: 'text', value: '/' }
+        },
+        slot: '<a href="#">Home</a><a href="#">Products</a><span>Laptop Pro 16"</span>'
+      },
+      pagination: {
+        tag: 'flowx-pagination',
+        attrs: {
+          'current-page': { type: 'number', value: 3 },
+          'total-pages': { type: 'number', value: 10 }
+        },
+        slot: '',
+        setup: () => {
+          const pag = document.querySelector('#component-container flowx-pagination');
+          if (pag) {
+            pag.addEventListener('fx-page-change', (e) => {
+              const snippet = document.getElementById('code-snippet');
+              if (snippet) snippet.textContent = `// fx-page-change fired!\n// detail.page = ${e.detail.page}\n\n// Vanilla DOM listener:\nel.addEventListener('fx-page-change', (e) => {\n  console.log('Page changed to:', e.detail.page);\n});`;
+            });
+          }
+        }
+      },
+      stepper: {
+        tag: 'flowx-stepper',
+        attrs: {
+          current: { type: 'range', min: 0, max: 4, value: 1 },
+          'data-steps': { type: 'text', value: 'Cart,Shipping,Payment,Review,Confirm' },
+          orientation: { type: 'select', options: ['horizontal', 'vertical'], value: 'horizontal' }
+        },
+        slot: ''
+      },
+      timeline: {
+        tag: 'div',
+        attrs: {},
+        slot: '<flowx-timeline><flowx-timeline-item time="January 2024" title="Project Kickoff">Initial planning and team assembly.</flowx-timeline-item><flowx-timeline-item time="March 2024" title="Alpha Release">First internal alpha released to test users.</flowx-timeline-item><flowx-timeline-item time="June 2024" title="Public Beta">Open beta launched with 500+ sign-ups.</flowx-timeline-item></flowx-timeline>'
+      },
+      // ── Tier 3 Form Components ─────────────────────────────────────
+      'fx-input': {
+        tag: 'flowx-input',
+        attrs: {
+          label: { type: 'text', value: 'Email Address' },
+          type: { type: 'select', options: ['text', 'email', 'password', 'number'], value: 'email' },
+          placeholder: { type: 'text', value: 'you@example.com' },
+          required: { type: 'boolean', value: false },
+          disabled: { type: 'boolean', value: false },
+          hint: { type: 'text', value: 'We never share your email.' }
+        },
+        slot: ''
+      },
+      'fx-textarea': {
+        tag: 'flowx-textarea',
+        attrs: {
+          label: { type: 'text', value: 'Bio' },
+          placeholder: { type: 'text', value: 'Tell us about yourself…' },
+          rows: { type: 'number', value: 4 },
+          required: { type: 'boolean', value: false },
+          resize: { type: 'select', options: ['vertical', 'horizontal', 'both', 'none'], value: 'vertical' }
+        },
+        slot: ''
+      },
+      'fx-checkbox': {
+        tag: 'flowx-checkbox',
+        attrs: {
+          label: { type: 'text', value: 'I agree to the Terms of Service' },
+          checked: { type: 'boolean', value: false },
+          required: { type: 'boolean', value: false },
+          disabled: { type: 'boolean', value: false }
+        },
+        slot: ''
+      },
+      'fx-switch': {
+        tag: 'flowx-switch',
+        attrs: {
+          label: { type: 'text', value: 'Enable dark mode' },
+          checked: { type: 'boolean', value: false },
+          disabled: { type: 'boolean', value: false }
+        },
+        slot: ''
+      },
+      'fx-radio': {
+        tag: 'div',
+        attrs: {},
+        slot: '<div style="display:flex;flex-direction:column;gap:12px"><flowx-radio name="plan" value="free" label="Free — $0/month" checked></flowx-radio><flowx-radio name="plan" value="pro" label="Pro — $12/month"></flowx-radio><flowx-radio name="plan" value="enterprise" label="Enterprise — Custom"></flowx-radio></div>'
+      },
+      'fx-select': {
+        tag: 'flowx-select',
+        attrs: {
+          label: { type: 'text', value: 'Country' },
+          required: { type: 'boolean', value: false },
+          placeholder: { type: 'text', value: 'Choose a country…' }
+        },
+        slot: '<option value="">Choose a country…</option><option value="us">🇺🇸 United States</option><option value="gb">🇬🇧 United Kingdom</option><option value="in">🇮🇳 India</option><option value="ca">🇨🇦 Canada</option><option value="au">🇦🇺 Australia</option>'
+      },
+      'fx-slider': {
+        tag: 'flowx-slider',
+        attrs: {
+          label: { type: 'text', value: 'Volume' },
+          min: { type: 'number', value: 0 },
+          max: { type: 'number', value: 100 },
+          step: { type: 'number', value: 1 },
+          value: { type: 'range', min: 0, max: 100, value: 50 }
+        },
+        slot: ''
+      },
+      'fx-rating': {
+        tag: 'flowx-rating',
+        attrs: {
+          label: { type: 'text', value: 'Rate your experience' },
+          max: { type: 'number', value: 5 },
+          value: { type: 'range', min: 0, max: 5, value: 3 },
+          readonly: { type: 'boolean', value: false }
+        },
+        slot: ''
+      },
+      'fx-otp': {
+        tag: 'flowx-otp-input',
+        attrs: {
+          label: { type: 'text', value: 'Verification Code' },
+          length: { type: 'number', value: 6 },
+          hint: { type: 'text', value: 'Check your email for a 6-digit code.' },
+          required: { type: 'boolean', value: false }
+        },
+        slot: ''
+      },
+      'fx-autocomplete': {
+        tag: 'flowx-autocomplete',
+        attrs: {
+          label: { type: 'text', value: 'Programming Language' },
+          placeholder: { type: 'text', value: 'Type to search…' },
+          options: { type: 'text', value: 'JavaScript,TypeScript,Python,Rust,Go,Swift,Kotlin,Elixir,Ruby,Haskell' },
+          required: { type: 'boolean', value: false }
+        },
+        slot: ''
+      },
+      'fx-signup-form': {
+        tag: 'div',
+        attrs: {},
+        slot: `
+          <style>
+            .demo-form { display: flex; flex-direction: column; gap: 18px; max-width: 460px; width: 100%; }
+            .demo-form h3 { margin: 0 0 4px; color: #e6edf3; font-size: 1.3rem; }
+            .demo-form p { margin: 0 0 12px; color: #8b949e; font-size: 0.9rem; }
+            .demo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+            .demo-submit {
+              background: var(--flowx-primary, #0066cc);
+              color: white; border: none; border-radius: 8px;
+              padding: 11px 24px; font-size: 1rem; font-weight: 600;
+              cursor: pointer; transition: opacity 0.2s;
+              font-family: inherit;
+            }
+            .demo-submit:hover { opacity: 0.85; }
+            .demo-submit.loading { opacity: 0.6; cursor: not-allowed; }
+            #demo-result {
+              padding: 12px 16px; border-radius: 8px; font-size: 0.9rem;
+              display: none; animation: fadeIn 0.3s ease;
+            }
+            #demo-result.success { background: rgba(63,185,80,0.12); border: 1px solid #3fb950; color: #3fb950; }
+            #demo-result.error { background: rgba(220,53,69,0.12); border: 1px solid #dc3545; color: #f47067; }
+            @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: translateY(0); } }
+          </style>
+          <flowx-form id="demo-signup-form">
+            <div class="demo-form">
+              <div>
+                <h3>Create Account</h3>
+                <p>Try submitting with errors — the server response will place validation messages inline.</p>
+              </div>
+              <div class="demo-row">
+                <div>
+                  <flowx-input id="demo-fname" name="firstName" label="First Name" placeholder="Jane" required></flowx-input>
+                  <flowx-form-error for="firstName"></flowx-form-error>
+                </div>
+                <div>
+                  <flowx-input id="demo-lname" name="lastName" label="Last Name" placeholder="Smith" required></flowx-input>
+                  <flowx-form-error for="lastName"></flowx-form-error>
+                </div>
+              </div>
+              <div>
+                <flowx-input name="email" label="Email Address" type="email" placeholder="jane@example.com" required></flowx-input>
+                <flowx-form-error for="email"></flowx-form-error>
+              </div>
+              <div>
+                <flowx-input name="password" label="Password" type="password" placeholder="Min 8 characters" minlength="8" required></flowx-input>
+                <flowx-form-error for="password"></flowx-form-error>
+              </div>
+              <div>
+                <flowx-select name="country" label="Country" required>
+                  <option value="">Choose a country…</option>
+                  <option value="us">🇺🇸 United States</option>
+                  <option value="gb">🇬🇧 United Kingdom</option>
+                  <option value="in">🇮🇳 India</option>
+                  <option value="ca">🇨🇦 Canada</option>
+                </flowx-select>
+                <flowx-form-error for="country"></flowx-form-error>
+              </div>
+              <flowx-checkbox name="terms" label="I agree to the Terms of Service" required></flowx-checkbox>
+              <flowx-form-error for="terms"></flowx-form-error>
+              <button id="demo-signup-btn" class="demo-submit" type="button">Create Account</button>
+              <div id="demo-result"></div>
+            </div>
+          </flowx-form>
+        `,
+        setup: () => {
+          const btn = document.getElementById('demo-signup-btn');
+          const result = document.getElementById('demo-result');
+          const form = document.getElementById('demo-signup-form');
+          if (!btn || !result || !form) return;
+
+          btn.onclick = async () => {
+            btn.textContent = 'Creating…';
+            btn.classList.add('loading');
+            result.style.display = 'none';
+
+            // Clear previous errors
+            form.querySelectorAll('flowx-form-error').forEach(e => {
+              e.textContent = '';
+              e.removeAttribute('visible');
+            });
+            form.querySelectorAll('[invalid]').forEach(e => e.removeAttribute('invalid'));
+
+            // Collect field values
+            const getVal = (name) => {
+              const el = form.querySelector(`[name="${name}"]`);
+              if (!el) return '';
+              return el._currentValue || el.getAttribute('value') || '';
+            };
+
+            const email = getVal('email');
+            const password = form.querySelector('[name="password"]')?.shadowRoot?.querySelector('input')?.value || '';
+            const country = getVal('country');
+            const terms = form.querySelector('[name="terms"]')?.hasAttribute('checked');
+            const firstName = form.querySelector('[name="firstName"]')?.shadowRoot?.querySelector('input')?.value || '';
+            const lastName = form.querySelector('[name="lastName"]')?.shadowRoot?.querySelector('input')?.value || '';
+
+            // ── Mock backend validation ──
+            await new Promise(r => setTimeout(r, 700)); // simulate network delay
+
+            const errors = {};
+            if (!firstName) errors.firstName = 'First name is required';
+            if (!lastName) errors.lastName = 'Last name is required';
+            if (!email || !email.includes('@')) errors.email = 'A valid email is required';
+            if (!password || password.length < 8) errors.password = 'Password must be at least 8 characters';
+            if (!country) errors.country = 'Please select your country';
+            if (!terms) errors.terms = 'You must accept the Terms of Service';
+
+            btn.textContent = 'Create Account';
+            btn.classList.remove('loading');
+
+            if (Object.keys(errors).length > 0) {
+              // Simulate fx-validation-errors header response
+              if (window.FlowXUI && window.FlowXUI.swapServerErrors) {
+                window.FlowXUI.swapServerErrors(form, errors);
+              } else {
+                // Inline fallback
+                Object.entries(errors).forEach(([field, msg]) => {
+                  const slot = form.querySelector('flowx-form-error[for="' + field + '"]');
+                  if (slot) { slot.textContent = msg; slot.setAttribute('visible', ''); }
+                  const fieldEl = form.querySelector('[name="' + field + '"]');
+                  if (fieldEl) fieldEl.setAttribute('invalid', '');
+                });
+              }
+            } else {
+              result.className = 'success';
+              result.textContent = '🎉 Account created! Welcome to FlowX, ' + firstName + '.';
+              result.style.display = 'block';
+            }
+          };
+        }
+      },
+      // ── Tier 5 Server-Driven Data Components ─────────────────────
+      'fx-data-table': {
+        tag: 'flowx-data-table',
+        attrs: {
+          mode: { type: 'select', options: ['server', 'client'], value: 'client' }
+        },
+        slot: `
+          <table style="width:100%;border-collapse:collapse;color:#e6edf3;font-size:14px;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.12);text-align:left;">
+                <th fx-sort="name" style="padding:8px">Name</th>
+                <th fx-sort="role" style="padding:8px">Role</th>
+                <th fx-sort="status" style="padding:8px">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:8px">Alice Smith</td><td style="padding:8px">Engineer</td><td style="padding:8px"><flowx-badge variant="success">Active</flowx-badge></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:8px">Bob Johnson</td><td style="padding:8px">Designer</td><td style="padding:8px"><flowx-badge variant="warning">Away</flowx-badge></td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:8px">Charlie Brown</td><td style="padding:8px">Product Lead</td><td style="padding:8px"><flowx-badge variant="success">Active</flowx-badge></td></tr>
+            </tbody>
+          </table>
+        `
+      },
+      'fx-data-grid': {
+        tag: 'flowx-data-grid',
+        attrs: {
+          mode: { type: 'select', options: ['server', 'client'], value: 'client' }
+        },
+        slot: `
+          <table style="width:100%;border-collapse:collapse;color:#e6edf3;font-size:14px;">
+            <thead>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.12);text-align:left;">
+                <th fx-sort="name" style="padding:8px">Name</th>
+                <th fx-sort="role" style="padding:8px">Role</th>
+                <th fx-sort="location" style="padding:8px">Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:8px">David Miller</td><td style="padding:8px">DevOps</td><td style="padding:8px">San Francisco</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><td style="padding:8px">Eva Garcia</td><td style="padding:8px">Frontend Lead</td><td style="padding:8px">Madrid</td></tr>
+            </tbody>
+          </table>
+        `
+      },
+      'fx-search': {
+        tag: 'flowx-search',
+        attrs: {
+          placeholder: { type: 'text', value: 'Search users…' },
+          delay: { type: 'number', value: 300 }
+        },
+        slot: ''
+      },
+      'fx-export': {
+        tag: 'flowx-export',
+        attrs: {
+          type: { type: 'select', options: ['csv', 'excel', 'pdf'], value: 'csv' },
+          filename: { type: 'text', value: 'users-export.csv' }
+        },
+        slot: ''
+      },
+      'fx-print': {
+        tag: 'flowx-print-button',
+        attrs: {},
+        slot: ''
+      },
+      'fx-grid-demo': {
+        tag: 'div',
+        attrs: {},
+        slot: `
+          <style>
+            .grid-demo-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 680px; }
+            .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; wrap: wrap; }
+            .demo-table { width: 100%; border-collapse: collapse; color: #e6edf3; font-size: 13px; }
+            .demo-table th { padding: 10px 12px; background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left; }
+            .demo-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            .demo-table tr:hover { background: rgba(255,255,255,0.03); }
+            .pagination-bar { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #8b949e; margin-top: 10px; }
+          </style>
+          <div class="grid-demo-container">
+            <div>
+              <h3 style="margin:0 0 4px;color:#e6edf3">⚡ Server-Driven Data Grid Showcase</h3>
+              <p style="margin:0;font-size:12px;color:#8b949e">Every sort click, search, and page change dispatches a real <code>fx-get</code> request. Watch devtools log each request!</p>
+            </div>
+            
+            <div class="toolbar">
+              <flowx-search for="demo-data-grid" placeholder="Filter users…"></flowx-search>
+              <div style="display:flex;gap:8px;">
+                <flowx-export for="demo-data-grid" type="csv" filename="users.csv"></flowx-export>
+                <flowx-print-button></flowx-print-button>
+              </div>
+            </div>
+
+            <flowx-data-grid id="demo-data-grid" mode="client" fx-endpoint="/api/users" fx-target="#grid-tbody">
+              <table class="demo-table">
+                <thead>
+                  <tr>
+                    <th fx-sort="id">ID</th>
+                    <th fx-sort="name">Name</th>
+                    <th fx-sort="role">Role</th>
+                    <th fx-sort="status">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="grid-tbody">
+                  <tr><td>#101</td><td>Alice Vance</td><td>Architect</td><td><flowx-badge variant="success">Active</flowx-badge></td></tr>
+                  <tr><td>#102</td><td>Bob Sterling</td><td>Developer</td><td><flowx-badge variant="info">Pending</flowx-badge></td></tr>
+                  <tr><td>#103</td><td>Charlie Day</td><td>UX Designer</td><td><flowx-badge variant="success">Active</flowx-badge></td></tr>
+                  <tr><td>#104</td><td>Diana Prince</td><td>SecOps</td><td><flowx-badge variant="warning">Away</flowx-badge></td></tr>
+                  <tr><td>#105</td><td>Ethan Hunt</td><td>QA Lead</td><td><flowx-badge variant="success">Active</flowx-badge></td></tr>
+                </tbody>
+              </table>
+            </flowx-data-grid>
+
+            <div class="pagination-bar">
+              <span>Showing 1–5 of 25 users</span>
+              <flowx-pagination total="5" current="1"></flowx-pagination>
+            </div>
+          </div>
+        `
+      },
+      // ── Tier 6 Native <dialog>-Based Overlays ──────────────────
+      'fx-modal': {
+        tag: 'flowx-modal',
+        attrs: {
+          title: { type: 'text', value: 'Example Modal' },
+          persistent: { type: 'boolean', value: false }
+        },
+        slot: '<div slot="body"><p style="margin:0 0 12px">This modal is built natively on the HTML &lt;dialog&gt; element with backdrop blurring and CSS animations.</p><button type="button" fx-dialog-close style="background:#0066cc;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Close Modal</button></div>'
+      },
+      'fx-sheet': {
+        tag: 'flowx-sheet',
+        attrs: {
+          title: { type: 'text', value: 'Side Drawer Sheet' },
+          side: { type: 'select', options: ['right', 'left'], value: 'right' }
+        },
+        slot: '<p>Side panel sliding in from edge. Ideal for filters, detail views, and app settings.</p><button type="button" fx-dialog-close style="background:#0066cc;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Close Sheet</button>'
+      },
+      'fx-bottom-sheet': {
+        tag: 'flowx-bottom-sheet',
+        attrs: {
+          title: { type: 'text', value: 'Bottom Sheet' }
+        },
+        slot: '<p>Mobile-pattern bottom sheet sliding up from screen bottom with drag-to-dismiss support.</p><button type="button" fx-dialog-close style="background:#0066cc;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Close</button>'
+      },
+      'fx-confirm': {
+        tag: 'flowx-confirm-dialog',
+        attrs: {
+          title: { type: 'text', value: 'Confirm Deletion' },
+          message: { type: 'text', value: 'Are you sure you want to permanently delete this user account?' }
+        },
+        slot: ''
+      },
+      'fx-lightbox': {
+        tag: 'flowx-lightbox',
+        attrs: {},
+        slot: '<img src="https://picsum.photos/800/600" alt="Sample" style="max-width:100%;border-radius:8px;" />'
+      }
+    };
+
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const controlsSec = document.getElementById('controls-section');
+    const container = document.getElementById('component-container');
+    const codeSnippet = document.getElementById('code-snippet');
+    
+    let activeKey = 'btn';
+    
+    const updateShowcase = () => {
+      const config = componentsConfig[activeKey];
+      if (!config) return;
+      
+      controlsSec.innerHTML = '<div class="control-group"></div>';
+      const group = controlsSec.querySelector('.control-group');
+      
+      for (const [attrName, opt] of Object.entries(config.attrs)) {
+        const item = document.createElement('div');
+        item.className = 'control-item';
+        item.innerHTML = `<label>${attrName}</label>`;
+        
+        let input;
+        if (opt.type === 'select') {
+          input = document.createElement('select');
+          opt.options.forEach(o => {
+            const s = document.createElement('option');
+            s.value = o;
+            s.textContent = o || '(none)';
+            if (o === opt.value) s.selected = true;
+            input.appendChild(s);
+          });
+        } else if (opt.type === 'boolean') {
+          input = document.createElement('input');
+          input.type = 'checkbox';
+          input.checked = opt.value;
+        } else if (opt.type === 'range') {
+          input = document.createElement('input');
+          input.type = 'range';
+          input.min = opt.min;
+          input.max = opt.max;
+          input.value = opt.value;
+        } else if (opt.type === 'number') {
+          input = document.createElement('input');
+          input.type = 'number';
+          input.value = opt.value;
+        } else {
+          input = document.createElement('input');
+          input.type = 'text';
+          input.value = opt.value;
+        }
+        
+        item.appendChild(input);
+        group.appendChild(item);
+        
+        const updateValue = () => {
+          if (opt.type === 'boolean') {
+            opt.value = input.checked;
+          } else if (opt.type === 'range' || opt.type === 'number') {
+            opt.value = Number(input.value);
+          } else {
+            opt.value = input.value;
+          }
+          renderPreview();
+        };
+        
+        input.addEventListener('change', updateValue);
+        input.addEventListener('input', updateValue);
+      }
+      
+      const renderPreview = () => {
+        const el = document.createElement(config.tag);
+        
+        let htmlAttr = '';
+        
+        for (const [attrName, opt] of Object.entries(config.attrs)) {
+          if (opt.type === 'boolean') {
+            if (opt.value) {
+              el.setAttribute(attrName, '');
+              htmlAttr += ` ${attrName}`;
+            }
+          } else if (opt.value !== '') {
+            el.setAttribute(attrName, String(opt.value));
+            htmlAttr += ` ${attrName}="${opt.value}"`;
+          }
+        }
+        
+        el.innerHTML = config.slot;
+        container.innerHTML = '';
+        container.appendChild(el);
+        
+        if (activeKey === 'toast') {
+          codeSnippet.textContent = `// Programmatic Toast trigger:\nFlowXToast.show({ message: "Success!", variant: "success" });`;
+        } else if (activeKey === 'timeline') {
+          codeSnippet.textContent = config.slot;
+        } else {
+          codeSnippet.textContent = `<${config.tag}${htmlAttr}>\n  ${config.slot}\n</${config.tag}>`;
+        }
+        
+        if (config.setup) {
+          config.setup();
+        }
+      };
+      
+      renderPreview();
+    };
+    
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeKey = btn.getAttribute('data-target');
+        updateShowcase();
+      });
+    });
+    
+    updateShowcase();
+  });
+</script>
+
+<style>
+  .playground-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    height: 500px;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .playground-layout {
+      grid-template-columns: 1fr;
+      height: 900px;
+    }
+  }
+
+  .editor-pane, .preview-pane {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .pane-header {
+    background: rgba(11, 15, 23, 0.6);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  iframe {
+    width: 100%;
+    flex: 1;
+    border: none;
+    background: #0d1117;
+  }
+
+  /* CodeMirror customizations */
+  :global(.CodeMirror) {
+    height: 100% !important;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    flex: 1;
+  }
+
+  /* Showcase Section */
+  .showcase-layout {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .showcase-nav {
+    background: rgba(11, 15, 23, 0.6);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    padding: 0.5rem;
+    gap: 0.25rem;
+    overflow-y: auto;
+    max-height: 600px;
+  }
+  .nav-section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 12px 12px 4px;
+    opacity: 0.6;
+  }
+  .nav-btn {
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+  }
+  .nav-btn.active {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .showcase-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #0d1117;
+  }
+  
+  @media (max-width: 900px) {
+    .showcase-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  :global(.control-item) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  :global(.control-item label) {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: bold;
+  }
+  :global(.control-item select), :global(.control-item input[type="text"]), :global(.control-item input[type="number"]) {
+    background: #161b22;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: #e6edf3;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  :global(.control-item input[type="checkbox"]) {
+    margin-right: 6px;
+    width: auto;
+  }
+
+  #preview-section {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .preview-header {
+    background: rgba(11, 15, 23, 0.4);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+  #component-container {
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+  }
+  #code-snippet {
+    background: #161b22;
+    padding: 1rem;
+    margin: 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+    color: #a5d6ff;
+  }
+</style>

@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Tier 13 Real-time & Collaboration Playground">
+  <style is:global>
+    @import '../../../../packages/ui/src/styles/index.css';
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) {
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .panel-header {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tab-badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+  </style>
+
+  <script>
+    import '../../../../packages/ui/src/index.ts';
+
+    // BroadcastChannel cross-tab real-time simulation for live SSE demo
+    document.addEventListener('DOMContentLoaded', () => {
+      const channel = new BroadcastChannel('flowx_collaboration_demo');
+
+      const user1Comments = document.getElementById('comments-user-1') as any;
+      const user2Comments = document.getElementById('comments-user-2') as any;
+
+      if (user1Comments && user2Comments) {
+        user1Comments.addEventListener('fx-comment-submit', (e: any) => {
+          channel.postMessage({ type: 'comment', data: e.detail });
+          user2Comments.addComment(e.detail);
+        });
+
+        user2Comments.addEventListener('fx-comment-submit', (e: any) => {
+          channel.postMessage({ type: 'comment', data: e.detail });
+          user1Comments.addComment(e.detail);
+        });
+      }
+
+      channel.onmessage = (msg) => {
+        if (msg.data && msg.data.type === 'comment') {
+          if (user1Comments) user1Comments.addComment(msg.data.data);
+          if (user2Comments) user2Comments.addComment(msg.data.data);
+        }
+      };
+    });
+  </script>
+
+  <section style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+      Tier 13 Real-time & Collaboration ⚡
+    </h1>
+    <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+      Live collaborative UI components built with FlowX's zero-JS SSE (<code style="color:#38bdf8">fx-sse-connect</code>) and WebSocket (<code style="color:#818cf8">fx-ws-connect</code>) extension hooks.
+    </p>
+  </section>
+
+  <!-- Live Two-Panel Synchronized Demo -->
+  <section class="card">
+    <h2 class="card-title">📡 Live Synchronized Multi-User Comment Stream (Two-Tab Simulation)</h2>
+    <p class="card-desc">
+      Post a comment in Tab 1 (User Alice) and watch it instantly appear live in Tab 2 (User Bob) via real-time BroadcastChannel SSE mock.
+    </p>
+
+    <div class="demo-grid">
+      <div>
+        <div class="panel-header">
+          <span class="tab-badge">Browser Tab 1</span>
+          <span>Alice's Workspace</span>
+        </div>
+        <flowx-comments id="comments-user-1" current-user="Alice"></flowx-comments>
+      </div>
+
+      <div>
+        <div class="panel-header">
+          <span class="tab-badge">Browser Tab 2</span>
+          <span>Bob's Workspace</span>
+        </div>
+        <flowx-comments id="comments-user-2" current-user="Bob"></flowx-comments>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notifications & Toast Stream -->
+  <section class="card">
+    <h2 class="card-title">🔔 Live Notifications & SSE Toast Stream</h2>
+    <p class="card-desc">Bell dropdown with live unread badge count updates and zero-JS server-pushed toasts.</p>
+
+    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem;">
+      <flowx-notifications></flowx-notifications>
+      <span style="font-size: 0.9rem; color: var(--text-muted);">Click the bell icon to toggle unread notifications panel</span>
+    </div>
+
+    <flowx-toast variant="info" duration="5000">
+      ⚡ Live Server Event: Alice updated project specs
+    </flowx-toast>
+  </section>
+
+  <!-- Chat Window -->
+  <section class="card">
+    <h2 class="card-title">💬 Live Chat Window & Deduplicated Stream</h2>
+    <p class="card-desc">Message list with optimistic deduplication, auto-scroll to bottom, and WebSocket hooks.</p>
+
+    <flowx-chat-window current-user="Alice"></flowx-chat-window>
+  </section>
+
+  <!-- Mention & Activity Feed -->
+  <section class="card">
+    <h2 class="card-title">@ User Mention Autocomplete & Grouped Activity Feed</h2>
+    <p class="card-desc">Type <code style="color: #38bdf8;">@</code> in the textarea below to trigger caret-positioned user autocomplete popup.</p>
+
+    <flowx-mention style="margin-bottom: 2rem;">
+      <textarea class="comment-textarea" style="width: 100%; min-height: 80px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: rgba(0,0,0,0.2); color: #fff;" placeholder="Type @alice or @bob to mention a teammate..."></textarea>
+    </flowx-mention>
+
+    <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Grouped Activity Feed</h3>
+    <flowx-activity-feed></flowx-activity-feed>
+  </section>
+</Layout>

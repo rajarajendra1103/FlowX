@@ -1,0 +1,148 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | FlowX Docs ⚡</title>
+  <link rel="stylesheet" href="/style.css">
+  <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg: #0b0f17;
+      --panel: rgba(22, 30, 49, 0.45);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --primary: #58a6ff;
+      --primary-glow: rgba(88, 166, 255, 0.15);
+      --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      background-image: radial-gradient(circle at top right, #141f36 0%, #0b0f17 100%);
+      color: var(--text);
+      font-family: var(--font);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      background: rgba(11, 15, 23, 0.7);
+      backdrop-filter: blur(12px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), #d857ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active {
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      flex: 1;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0 0 1.5rem;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      background: rgba(11, 15, 23, 0.4);
+    }
+  </style>
+  <!-- Anti-flash inline script for SSR theme prevention -->
+  <script is:inline>
+    (function(){try{var c=document.cookie.match(/(?:^|; )flowx-theme=([^;]*)/);var t=c?decodeURIComponent(c[1]):localStorage.getItem('flowx-theme')||'auto';if(t==='auto'){var d=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme','auto');}else{document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+  </script>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">FlowX Docs ⚡</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/theming">Theming & Layout</a>
+      <a href="/planner">Planner Tier 12</a>
+      <a href="/collaboration">Collaboration Tier 13</a>
+      <a href="/api-reference">API Reference</a>
+      <a href="/playground">Playground</a>
+      <a href="/comparison">Comparison</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <slot />
+  </main>
+
+  <footer>
+    &copy; {new Date().getFullYear()} FlowX Ecosystem. Built with Astro & ❤️.
+  </footer>
+</body>
+</html>

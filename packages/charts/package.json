@@ -1,0 +1,45 @@
+{
+  "name": "@flowx/charts",
+  "version": "0.1.0",
+  "description": "Zero-dependency server-rendered JSON-island charting & live dashboard components for FlowX",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/flowx-charts.global.js",
+  "jsdelivr": "./dist/flowx-charts.global.js",
+  "browser": "./dist/flowx-charts.global.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./dist/*": "./dist/*"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "flowx",
+    "charts",
+    "svg",
+    "custom-elements",
+    "htmx",
+    "json-island",
+    "dashboard",
+    "sse"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.6.1"
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Tier 12 Planner Widgets &amp; Playground | FlowX Docs ⚡</title><link rel="stylesheet" href="/style.css"><!-- Anti-flash inline script for SSR theme prevention --><script>
+    (function(){try{var c=document.cookie.match(/(?:^|; )flowx-theme=([^;]*)/);var t=c?decodeURIComponent(c[1]):localStorage.getItem('flowx-theme')||'auto';if(t==='auto'){var d=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme','auto');}else{document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+  </script><style>@import"https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap";:root{--bg: #0b0f17;--panel: rgba(22, 30, 49, .45);--border: rgba(255, 255, 255, .08);--text: #f0f6fc;--text-muted: #8b949e;--primary: #58a6ff;--primary-glow: rgba(88, 166, 255, .15);--font: "Plus Jakarta Sans", system-ui, sans-serif}body{background:var(--bg);background-image:radial-gradient(circle at top right,#141f36,#0b0f17);color:var(--text);font-family:var(--font);margin:0;padding:0;min-height:100vh;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}header{border-bottom:1px solid var(--border);padding:1rem 2rem;background:#0b0f17b3;backdrop-filter:blur(12px);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.logo{font-size:1.35rem;font-weight:800;background:linear-gradient(135deg,var(--primary),#d857ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}nav{display:flex;gap:1.5rem}nav a{color:var(--text-muted);text-decoration:none;font-size:.95rem;font-weight:500;transition:color .2s}nav a:hover,nav a.active{color:var(--text)}.container{max-width:900px;margin:2rem auto;padding:0 1.5rem;flex:1;width:100%;box-sizing:border-box}.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:2rem;backdrop-filter:blur(10px);margin-bottom:2rem}.card-title{font-size:1.5rem;font-weight:700;margin:0 0 .5rem}.card-desc{color:var(--text-muted);font-size:.95rem;margin:0 0 1.5rem}footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;color:var(--text-muted);font-size:.85rem;background:#0b0f1766}
+</style>
+<link rel="stylesheet" href="/_astro/planner.DUqw_xxa.css"><script type="module" src="/_astro/hoisted.CG0veuwX.js"></script></head> <body> <header> <a href="/" class="logo">FlowX Docs ⚡</a> <nav> <a href="/">Home</a> <a href="/theming">Theming & Layout</a> <a href="/planner">Planner Tier 12</a> <a href="/collaboration">Collaboration Tier 13</a> <a href="/api-reference">API Reference</a> <a href="/playground">Playground</a> <a href="/comparison">Comparison</a> </nav> </header> <main class="container">    <section style="margin-bottom: 2rem;"> <h1 style="font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #3b82f6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+Tier 12 Planner Widgets & Playground 📅
+</h1> <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6;">
+Substantial, self-contained planner widgets built with the <strong>JSON-island initial state, commit-on-action</strong> pattern. Every drag-and-drop interaction uses the Pointer Events API and features a full keyboard-accessible equivalent.
+</p> </section>  <section class="card"> <h2 class="card-title">📋 Kanban Task Board & Live fx-post Payload Logger</h2> <p class="card-desc">
+Drag cards across columns using Pointer Events or test keyboard accessibility: Focus a card with <span class="keyboard-badge">Tab</span>, press <span class="keyboard-badge">Space</span> to pick up, move with <span class="keyboard-badge">&larr; / &rarr;</span>, and press <span class="keyboard-badge">Enter</span> to drop.
+</p> <flowx-kanban commit-url="/api/kanban/move"> <script type="application/json">
+        {
+          "columns": [
+            { "id": "col-backlog", "title": "Backlog" },
+            { "id": "col-in-progress", "title": "In Progress" },
+            { "id": "col-review", "title": "In Review" },
+            { "id": "col-done", "title": "Completed" }
+          ],
+          "cards": [
+            { "id": "c-101", "columnId": "col-backlog", "title": "Refactor CSS Custom Properties", "description": "Ensure token references across all Tiers", "tag": "Core", "tagColor": "#2563eb" },
+            { "id": "c-102", "columnId": "col-in-progress", "title": "Build Kanban Accessibility Suite", "description": "Keyboard-only task movement & ARIA live region", "tag": "A11y", "tagColor": "#10b981" },
+            { "id": "c-103", "columnId": "col-review", "title": "Gantt Chart SVG Connector Lines", "description": "Render dependency arrows between tasks", "tag": "Planner", "tagColor": "#a855f7" }
+          ]
+        }
+      </script> </flowx-kanban> <div class="payload-logger"> <div class="logger-title">Live Payload Log (Mock fx-post Server Receiver)</div> <pre id="payload-log-output" style="margin: 0;">Waiting for card movements or user commits...</pre> </div> </section>  <section class="card"> <h2 class="card-title">📅 Interactive Calendar Widget</h2> <p class="card-desc">Month/Week/Day views reading from JSON islands, with click-to-create modals and Pointer Events date dragging.</p> <flowx-calendar commit-url="/api/calendar/commit"> <script type="application/json">
+        [
+          { "id": "ev-101", "title": "Team Sprint Review", "start": "2026-07-28", "color": "#2563eb" },
+          { "id": "ev-102", "title": "Design Tokens Audit", "start": "2026-07-30", "color": "#10b981" }
+        ]
+      </script> </flowx-calendar> </section>  <section class="card"> <h2 class="card-title">📊 Gantt Chart & Dependency Editor</h2> <p class="card-desc">Task bars with SVG dependency arrows, drag-to-resize/reschedule, and keyboard duration adjustments.</p> <flowx-gantt-chart commit-url="/api/gantt/update"> <script type="application/json">
+        [
+          { "id": "g-1", "name": "Architecture Design", "startOffset": 1, "duration": 4 },
+          { "id": "g-2", "name": "UI Component Engine", "startOffset": 5, "duration": 5, "dependencies": ["g-1"] },
+          { "id": "g-3", "name": "Planner Tier 12", "startOffset": 6, "duration": 6, "dependencies": ["g-1"] },
+          { "id": "g-4", "name": "Release Launch", "startOffset": 12, "duration": 2, "dependencies": ["g-2", "g-3"] }
+        ]
+      </script> </flowx-gantt-chart> </section>  <section class="card"> <h2 class="card-title">⏱️ Resource Scheduler Grid</h2> <p class="card-desc">Resource-by-time-slot matrix for assigning staff/rooms across hourly slots.</p> <flowx-scheduler slots-count="7" commit-url="/api/scheduler/assign"> <script type="application/json">
+        {
+          "resources": [
+            { "id": "res-1", "name": "Sarah Connor", "role": "Lead Architect" },
+            { "id": "res-2", "name": "Marcus Wright", "role": "Frontend Engineer" },
+            { "id": "res-3", "name": "Kyle Reese", "role": "QA Specialist" }
+          ],
+          "allocations": [
+            { "id": "a-10", "resourceId": "res-1", "slot": 1, "title": "System Design", "color": "#a855f7" },
+            { "id": "a-11", "resourceId": "res-2", "slot": 3, "title": "Kanban Polish", "color": "#2563eb" }
+          ]
+        }
+      </script> </flowx-scheduler> </section>  <section class="card"> <h2 class="card-title">🎨 Freeform Whiteboard Surface</h2> <p class="card-desc">Client-only HTML5 Canvas drawing & sticky-notes surface. State serializes to JSON on draw/edit.</p> <flowx-whiteboard commit-url="/api/whiteboard/save"> <script type="application/json">
+        {
+          "strokes": [],
+          "notes": [
+            { "id": "sn-1", "x": 60, "y": 40, "text": "FlowX Tier 12 Planner Architecture", "color": "#fef08a" }
+          ]
+        }
+      </script> </flowx-whiteboard> </section>  </main> <footer>
+&copy; 2026 FlowX Ecosystem. Built with Astro & ❤️.
+</footer> </body></html>

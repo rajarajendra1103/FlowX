@@ -1,0 +1,24 @@
+{
+  "name": "@flowx/cli",
+  "version": "0.1.0",
+  "description": "FlowX command-line utility",
+  "main": "./dist/index.js",
+  "bin": {
+    "create-flowx-app": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "tsup": "^8.1.0"
+  }
+}
